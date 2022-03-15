@@ -2,6 +2,7 @@ body {
   font-family: sans-serif;
   color: #222;
   margin: 0;
+  background-color: rgb(240, 240, 240);
 }
 
 h1,
@@ -30,20 +31,17 @@ p {
   margin: 0 0 1.15em;
 }
 
-.container {
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 24px;
-}
-
-header {
-  background-color: #f76c6c;
+nav a {
+  width: 50%;
+  font-weight: bold;
   color: #fff;
+  margin-right: 10px;
 }
 
-footer {
-  border-top: 2px solid #f76c6c;
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* 
@@ -53,9 +51,11 @@ footer {
   display: grid;
   grid-template-columns: repeat(3, 32%);
   justify-content: space-between;
+  gap: 10px;
 }
 
 .card {
+  position: relative;
   padding: 20px;
   border: 1px solid #c9c9c9;
   border-radius: 7px;
@@ -67,6 +67,13 @@ footer {
   margin-bottom: 20px;
   max-width: 100%;
   height: auto;
+}
+
+.card {
+  padding: 20px;
+  border: 1px solid #c9c9c9;
+  border-radius: 7px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .card h3,
@@ -100,7 +107,7 @@ footer {
   display: inline-block;
 }
 
-.card .skills {
+.skills {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -109,7 +116,7 @@ footer {
   flex-wrap: wrap;
 }
 
-.card .skills li {
+.skills li {
   margin: 4px 0;
   display: flex;
   justify-content: space-around;
@@ -118,18 +125,25 @@ footer {
   padding: 2px;
 }
 
-.card .skills .votes {
+.skills p {
+  margin: 1px 5px;
+}
+
+.skills .votes {
+  margin: 2px 5px;
+  font-weight: 500;
   /* Center the content */
   align-items: center;
   display: flex;
   justify-content: center;
+  font-size: 0.85rem;
 
   /* Colors */
   background-color: rgba(0, 0, 0, 0.3);
   color: #fff;
 
   /* Rounded border */
-  border-radius: 9999px;
+  border-radius: 50%;
   height: 20px;
   width: 20px;
 }

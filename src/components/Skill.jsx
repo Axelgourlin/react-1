@@ -1,15 +1,15 @@
 import PropTypes from "prop-types";
 
-const Skill = ({ skill, votes }) => {
+const Skill = ({ title, votes }) => {
   return (
     <li>
-      {skill}
+      <p>{title}</p>
       <span className="votes">{votes}</span>
     </li>
   );
 };
 Skill.propTypes = {
-  skill: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   votes: PropTypes.number.isRequired,
 };
 

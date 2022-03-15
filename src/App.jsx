@@ -1,80 +1,76 @@
-import Wilder from "./components/Wilder";
-import "./App.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-import blank_profile from "./assets/avatar.png";
+import Form from "pages/Form";
+
+import "./App.css";
+import { Footer } from "./components/styled/Footer";
+import { Container } from "components/styled/Container";
+import Wilder from "components/Wilder";
 
 function App() {
-  const wilders = [
-    {
-      name: "John Doe",
-      img: blank_profile,
-      description: `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-  veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-  commodo consequat.`,
-      skills: [
-        { skill: "HTML", votes: 3 },
-        { skill: "CSS", votes: 3 },
-        { skill: "TypeScript", votes: 3 },
-        { skill: "React", votes: 3 },
-        { skill: "Node", votes: 2 },
-      ],
-    },
-    {
-      name: "Bob Doe",
-      img: blank_profile,
-      description: `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-  veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-  commodo consequat.`,
-      skills: [
-        { skill: "HTML", votes: 3 },
-        { skill: "CSS", votes: 3 },
-        { skill: "TypeScript", votes: 3 },
-        { skill: "React", votes: 3 },
-        { skill: "Node", votes: 2 },
-      ],
-    },
-    {
-      name: "Hello Doe",
-      img: blank_profile,
-      description: `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-  veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-  commodo consequat.`,
-      skills: [
-        { name: "HTML", votes: 3 },
-        { name: "CSS", votes: 3 },
-        { name: "TypeScript", votes: 3 },
-        { name: "React", votes: 3 },
-        { name: "Node", votes: 2 },
-      ],
-    },
-  ];
+  const [wilders, setWilders] = useState([]);
+  const [hasError, setHasError] = useState({ message: "", status: false });
+  const [showForm, setShowForm] = useState(false);
+
+  const getWilders = async () => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_URL_API}/wilders`
+      );
+      setWilders(data.result);
+    } catch (error) {
+      setHasError({ message: error.message, status: true });
+    }
+  };
+
+  useEffect(() => {
+    getWilders();
+  }, []);
 
   return (
-    <div>
-      <header>
-        <div className="container">
-          <h1>Wilders Book</h1>
-        </div>
-      </header>
-      <main className="container">
+    <div className="app">
+      <Container>
+        <h1>Wilders Book</h1>
         <h2>Wilders</h2>
+        <button onClick={() => setShowForm(!showForm)}>
+          {showForm ? "Close" : "Open"} Form
+        </button>
+      </Container>
+      <Container>
+        {showForm && (
+          <Form
+            onError={(error) => setHasError(error)}
+            getWilders={() => getWilders()}
+          />
+        )}
         <section className="card-row">
-          {wilders.map((wilder, i) => (
-            <Wilder key={i} {...wilder} />
+          {wilders.map((wilder) => (
+            <Wilder
+              key={wilder._id}
+              {...wilder}
+              getWilders={() => getWilders()}
+              onError={(error) =>
+                setHasError({ message: error.message, status: true })
+              }
+            />
           ))}
         </section>
-      </main>
-      <footer>
+        {hasError.status && (
+          <div>
+            <h4>Oops il y a eu une erreur !</h4>
+            <div>
+              <h5>Message d'erreur :</h5>
+              <p>{hasError.message}</p>
+            </div>
+          </div>
+        )}
+      </Container>
+      <Footer>
         <div className="container">
           <p>&copy; 2022 Wild Code School</p>
         </div>
-      </footer>
+      </Footer>
     </div>
   );
 }
