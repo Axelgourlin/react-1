@@ -96,15 +96,17 @@ nav a {
   line-height: 1.5;
 }
 
-.button {
+button {
   /* Reset text link default */
-  text-decoration: none;
-
   background-color: #f76c6c;
+  border-radius: 3px;
+  border: none;
   color: #fff;
-  padding: 0.5em 1em;
-  border-radius: 4px;
-  display: inline-block;
+  box-shadow: 0px 0px 1px #000;
+}
+button:hover {
+  box-shadow: 0px 0px 4px #000;
+  cursor: pointer;
 }
 
 .skills {
